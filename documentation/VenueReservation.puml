@@ -1,13 +1,13 @@
-@startuml Venue Reservation Bounded Context - Domain Model
+@startuml
 title Venue Reservation Bounded Context - Domain Model
 
 skinparam classAttributeIconSize 0
 
 package "Venue Reservation Domain" {
 
-'=========================
+'====================================================
 ' Aggregate Roots
-'=========================
+'====================================================
 
 class VenueRequest <<Aggregate Root>> {
     - id : UUID
@@ -18,10 +18,13 @@ class VenueRequest <<Aggregate Root>> {
     - timePeriod : TimePeriod
     - status : RequestStatus
 
+    --
+    + create(...)
     + submit()
     + approve()
     + reject()
 
+    --
     + isDraft()
     + isPendingReview()
     + isApproved()
@@ -36,8 +39,13 @@ class Reservation <<Aggregate Root>> {
     - timePeriod : TimePeriod
     - status : ReservationStatus
 
-    + confirm()
+    --
+    + create(...)
     + cancel()
+
+    --
+    + isConfirmed()
+    + isCancelled()
 }
 
 class Venue <<Aggregate Root>> {
@@ -46,27 +54,36 @@ class Venue <<Aggregate Root>> {
     - size : VenueSize
     - facilities : List<String>
 
+    --
+    + create(...)
     + rename(name)
-    + updateFacilities()
+    + addFacility(facility)
+    + removeFacility(facility)
 }
 
-'=========================
-' Value Objects
-'=========================
+'====================================================
+' Shared Value Objects
+'====================================================
+
+package "Shared" {
 
 class TimePeriod <<Value Object>> {
     - date : LocalDate
     - startTime : LocalTime
     - endTime : LocalTime
 
+    --
+    + create(...)
     + overlaps(period)
     + duration()
-    + isValid()
+    + validate()
 }
 
-'=========================
+}
+
+'====================================================
 ' Enumerations
-'=========================
+'====================================================
 
 enum RequestStatus {
     DRAFT
@@ -75,53 +92,73 @@ enum RequestStatus {
     REJECTED
 }
 
+enum ReservationStatus {
+    CONFIRMED
+    CANCELLED
+}
+
 enum VenueSize {
     SMALL
     MEDIUM
     LARGE
 }
 
-enum ReservationStatus {
-    CONFIRMED,
-    CANCELLED
-}
-
-'=========================
+'====================================================
 ' Domain Service
-'=========================
+'====================================================
 
 class ReservationAvailabilityPolicy <<Domain Service>> {
-    + ensureNoOverlappingReservations(
+
+    + checkAvailability(
+        venueId,
+        timePeriod
+    )
+
+    + ensureVenueAvailable(
         venueId,
         timePeriod
     )
 }
 
-'=========================
+'====================================================
 ' Repository Interfaces
-'=========================
+'====================================================
 
 interface VenueRequestRepository {
+
     + save(request)
+
     + findById(id)
+
+    + findPendingReview()
+
 }
 
 interface ReservationRepository {
+
     + save(reservation)
+
     + findById(id)
+
     + findReservationsForVenue(venueId)
+
 }
 
 interface VenueRepository {
+
     + save(venue)
+
     + findById(id)
-}
+
+    + findAll()
 
 }
 
-'=========================
+}
+
+'====================================================
 ' Relationships
-'=========================
+'====================================================
 
 VenueRequest *-- TimePeriod
 Reservation *-- TimePeriod
@@ -129,13 +166,14 @@ Reservation *-- TimePeriod
 Venue --> VenueSize
 
 VenueRequest --> RequestStatus
+Reservation --> ReservationStatus
+
+VenueRequest "0..*" --> "1" Venue : requests
+Reservation "0..*" --> "1" Venue : reserves
 
 Reservation --> VenueRequest : references
-VenueRequest --> Venue : references
-Reservation --> Venue : reserves
 
 ReservationAvailabilityPolicy ..> ReservationRepository
-ReservationAvailabilityPolicy ..> Reservation
 ReservationAvailabilityPolicy ..> TimePeriod
 
 VenueRequestRepository ..> VenueRequest

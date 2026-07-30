@@ -13,9 +13,11 @@ public class TimePeriod {
     @Getter
     private LocalTime endTime;
 
+    public void create() {}
+
     public void overlaps(TimePeriod period) {}
 
     public void duration() {}
 
-    public void isValid() {}
+    public void validate() {}
 }

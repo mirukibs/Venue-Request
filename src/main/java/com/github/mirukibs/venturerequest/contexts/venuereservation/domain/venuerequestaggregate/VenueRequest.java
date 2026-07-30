@@ -1,4 +1,4 @@
-package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.requestaggregate;
+package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.venuerequestaggregate;
 
 import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.shared.TimePeriod;
 import lombok.Getter;
@@ -19,7 +19,9 @@ public class VenueRequest {
     @Getter
     private TimePeriod timePeriod;
     @Getter
-    private RequestStatus status;
+    private VenueRequestStatus status;
+
+    public void create() {}
 
     public void submit() {}
 
