@@ -10,11 +10,11 @@ package "Venue Reservation Domain" {
 '=========================
 
 class VenueRequest <<Aggregate Root>> {
-    - id : VenueRequestId
+    - id : UUID
     - title : String
     - description : String
-    - requesterId : PersonId
-    - venueId : VenueId
+    - requesterId : UUID
+    - venueId : UUID
     - timePeriod : TimePeriod
     - status : RequestStatus
 
@@ -29,10 +29,10 @@ class VenueRequest <<Aggregate Root>> {
 }
 
 class Reservation <<Aggregate Root>> {
-    - id : ReservationId
-    - venueId : VenueId
-    - venueRequestId : VenueRequestId
-    - requesterId : PersonId
+    - id : UUID
+    - venueId : UUID
+    - venueRequestId : UUID
+    - requesterId : UUID
     - timePeriod : TimePeriod
 
     + confirm()
@@ -40,13 +40,13 @@ class Reservation <<Aggregate Root>> {
 }
 
 class Venue <<Aggregate Root>> {
-    - id : VenueId
+    - id : UUID
     - name : String
     - size : VenueSize
     - facilities : List<String>
 
     + rename(name)
-    + updateFacilities(facilities)
+    + updateFacilities()
 }
 
 '=========================
