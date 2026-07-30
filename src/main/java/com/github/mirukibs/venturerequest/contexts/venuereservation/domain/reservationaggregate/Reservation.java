@@ -3,12 +3,14 @@ package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.rese
 import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.sharedkernel.TimePeriod;
 import lombok.Getter;
 
+import java.util.UUID;
+
 public class Reservation {
-    private String id;
+    private UUID id;
     @Getter
-    private String venueId;
+    private UUID venueId;
     @Getter
-    private String venueRequestId;
+    private UUID venueRequestId;
     @Getter
     private TimePeriod timePeriod;
     @Getter
