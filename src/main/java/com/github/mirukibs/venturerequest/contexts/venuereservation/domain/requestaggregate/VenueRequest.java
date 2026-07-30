@@ -1,5 +1,6 @@
-package com.github.mirukibs.venturerequest.contexts.venuereservation.requestaggregate;
+package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.requestaggregate;
 
+import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.sharedkernel.TimePeriod;
 import lombok.Getter;
 
 public class VenueRequest {

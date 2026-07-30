@@ -1,4 +1,4 @@
-package com.github.mirukibs.venturerequest.contexts.venuereservation.requestaggregate;
+package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.sharedkernel;
 
 import lombok.Getter;
 
