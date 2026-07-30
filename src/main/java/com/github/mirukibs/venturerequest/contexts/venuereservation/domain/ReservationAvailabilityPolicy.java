@@ -5,10 +5,7 @@ import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.share
 import java.util.UUID;
 
 public class ReservationAvailabilityPolicy {
-    private UUID venueId;
-    private TimePeriod timePeriod;
+    public void checkAvailability(UUID venueId, TimePeriod timePeriod) {}
 
-    public void checkAvailability() {}
-
-    public void ensureVenueAvailability() {}
+    public void ensureVenueAvailability(UUID venueId, TimePeriod timePeriod) {}
 }
