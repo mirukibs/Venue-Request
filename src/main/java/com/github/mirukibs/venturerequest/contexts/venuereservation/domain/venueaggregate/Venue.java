@@ -3,9 +3,10 @@ package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.venu
 import lombok.Getter;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Venue {
-    private String id;
+    private UUID id;
     @Getter
     private String name;
     @Getter
