@@ -1,0 +1,138 @@
+@startuml Venue Reservation Bounded Context - Domain Model
+title Venue Reservation Bounded Context - Domain Model
+
+skinparam classAttributeIconSize 0
+
+package "Venue Reservation Domain" {
+
+'=========================
+' Aggregate Roots
+'=========================
+
+class VenueRequest <<Aggregate Root>> {
+    - id : VenueRequestId
+    - title : String
+    - description : String
+    - requesterId : PersonId
+    - venueId : VenueId
+    - timePeriod : TimePeriod
+    - status : RequestStatus
+
+    + submit()
+    + approve()
+    + reject()
+
+    + isDraft()
+    + isPendingReview()
+    + isApproved()
+    + isRejected()
+}
+
+class Reservation <<Aggregate Root>> {
+    - id : ReservationId
+    - venueId : VenueId
+    - venueRequestId : VenueRequestId
+    - requesterId : PersonId
+    - timePeriod : TimePeriod
+
+    + cancel()
+}
+
+class Venue <<Aggregate Root>> {
+    - id : VenueId
+    - name : String
+    - size : VenueSize
+    - facilities : List<String>
+
+    + rename(name)
+    + updateFacilities(facilities)
+}
+
+'=========================
+' Value Objects
+'=========================
+
+class TimePeriod <<Value Object>> {
+    - date : LocalDate
+    - startTime : LocalTime
+    - endTime : LocalTime
+
+    + overlaps(period)
+    + duration()
+    + isValid()
+}
+
+'=========================
+' Enumerations
+'=========================
+
+enum RequestStatus {
+    DRAFT
+    PENDING_REVIEW
+    APPROVED
+    REJECTED
+}
+
+enum VenueSize {
+    SMALL
+    MEDIUM
+    LARGE
+}
+
+'=========================
+' Domain Service
+'=========================
+
+class ReservationAvailabilityPolicy <<Domain Service>> {
+    + ensureNoOverlappingReservations(
+        venueId,
+        timePeriod
+    )
+}
+
+'=========================
+' Repository Interfaces
+'=========================
+
+interface VenueRequestRepository {
+    + save(request)
+    + findById(id)
+}
+
+interface ReservationRepository {
+    + save(reservation)
+    + findById(id)
+    + findReservationsForVenue(venueId)
+}
+
+interface VenueRepository {
+    + save(venue)
+    + findById(id)
+}
+
+}
+
+'=========================
+' Relationships
+'=========================
+
+VenueRequest *-- TimePeriod
+Reservation *-- TimePeriod
+
+Venue --> VenueSize
+
+VenueRequest --> RequestStatus
+
+Reservation --> VenueRequest : references
+VenueRequest --> Venue : references
+Reservation --> Venue : reserves
+
+ReservationAvailabilityPolicy ..> ReservationRepository
+ReservationAvailabilityPolicy ..> Reservation
+ReservationAvailabilityPolicy ..> TimePeriod
+
+VenueRequestRepository ..> VenueRequest
+ReservationRepository ..> Reservation
+VenueRepository ..> Venue
+
+@enduml
