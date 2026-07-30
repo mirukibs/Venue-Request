@@ -16,7 +16,13 @@ public class Reservation {
     @Getter
     private ReservationStatus status;
 
+    public void create() {}
+
     public void cancel() {}
 
     public void confirm() {}
+
+    public void isConfirmed() {}
+
+    public void isCancelled() {}
 }
