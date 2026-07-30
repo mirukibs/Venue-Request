@@ -14,7 +14,7 @@ public class Venue {
     @Getter
     private List<String> facilities;
 
-    public void rename() {}
+    public void rename(String name) {}
 
     public void updateFacilities() {}
 }

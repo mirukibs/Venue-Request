@@ -13,7 +13,7 @@ public class TimePeriod {
     @Getter
     private LocalTime endTime;
 
-    public void overlaps() {}
+    public void overlaps(TimePeriod period) {}
 
     public void duration() {}
 
