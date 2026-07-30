@@ -34,6 +34,7 @@ class Reservation <<Aggregate Root>> {
     - venueRequestId : UUID
     - requesterId : UUID
     - timePeriod : TimePeriod
+    - status : ReservationStatus
 
     + confirm()
     + cancel()

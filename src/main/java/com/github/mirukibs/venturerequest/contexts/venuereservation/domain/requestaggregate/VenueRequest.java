@@ -1,6 +1,6 @@
 package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.requestaggregate;
 
-import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.sharedkernel.TimePeriod;
+import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.shared.TimePeriod;
 import lombok.Getter;
 
 import java.util.UUID;
