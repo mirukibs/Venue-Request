@@ -1,4 +1,4 @@
-package com.github.mirukibs.venturerequest.contexts.venuereservation.domain;
+package com.github.mirukibs.venturerequest.contexts.venuereservation.domain.service;
 
 import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.shared.TimePeriod;
 
