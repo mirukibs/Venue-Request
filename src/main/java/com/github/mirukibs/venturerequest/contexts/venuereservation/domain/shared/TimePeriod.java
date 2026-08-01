@@ -13,14 +13,15 @@ import java.util.Objects;
 
 @EqualsAndHashCode
 public final class TimePeriod {
+    private static final LocalTime OPENING_TIME = LocalTime.of(7, 0);
+    private static final LocalTime CLOSING_TIME = LocalTime.of(17, 0);
+
     @Getter
     private final LocalDate date;
     @Getter
     private final LocalTime startTime;
     @Getter
     private final LocalTime endTime;
-    private static final LocalTime OPENING_TIME = LocalTime.of(7, 0);
-    private static final LocalTime CLOSING_TIME = LocalTime.of(17, 0);
 
     private TimePeriod(
             LocalDate date,
@@ -112,5 +113,14 @@ public final class TimePeriod {
 
     public Duration duration() {
         return Duration.between(startTime, endTime);
+    }
+
+    @Override
+    public String toString() {
+        return "TimePeriod{" +
+                "date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }
