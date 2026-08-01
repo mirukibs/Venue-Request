@@ -4,6 +4,7 @@ import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.excep
 import com.github.mirukibs.venturerequest.contexts.venuereservation.domain.shared.TimePeriod;
 import lombok.Getter;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class VenueRequest {
@@ -47,6 +48,11 @@ public class VenueRequest {
             UUID venueId,
             TimePeriod timePeriod
     ) {
+        Objects.requireNonNull(title);
+        Objects.requireNonNull(requesterId);
+        Objects.requireNonNull(venueId);
+        Objects.requireNonNull(timePeriod);
+
         return new VenueRequest(
                 UUID.randomUUID(),
                 title,
@@ -137,5 +143,33 @@ public class VenueRequest {
         changeDescription(description);
         changeVenue(venueId);
         changeTimePeriod(timePeriod);
+    }
+
+    @Override
+    public String toString() {
+        return "VenueRequest{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", requesterId=" + requesterId +
+                ", venueId=" + venueId +
+                ", timePeriod=" + timePeriod +
+                ", status=" + status +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof VenueRequest other)) {
+            return false;
+        }
+
+        return id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
