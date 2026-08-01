@@ -109,15 +109,9 @@ enum VenueSize {
 
 class ReservationAvailabilityPolicy <<Domain Service>> {
 
-    + checkAvailability(
-        venueId,
-        timePeriod
-    )
+    + checkAvailability(venueId, timePeriod)
 
-    + ensureVenueAvailable(
-        venueId,
-        timePeriod
-    )
+    + ensureVenueAvailable(venueId, timePeriod)
 }
 
 '====================================================
